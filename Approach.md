@@ -1,6 +1,6 @@
 High-Level Approach
 1) Create CloudFormation scripts to provision web server on EC2 , PostgreSQL DB on RDS , Redis cluster on Elasticache, and S3 bucket to store the same scripts.
-***the EC2 bootstrap script will contain OS updates as installation of pip manager and installation of 'apache-airflow' package
+***the EC2 bootstrap script will contain OS updates and installation of pip manager and 'apache-airflow' package
 
 2) Create Bash Script that will 
 	a)use the AWS CLI to create a CloudFormation stack pointing to the cloudFormation template bucket location in step 1

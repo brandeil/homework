@@ -38,35 +38,44 @@ Resources:
 #      MasterUserPassword: "DBPassword"      
 #    DeletionPolicy: "Snapshot"
     
-#  MyEC2:
-#    Type: "AWS::EC2::Instance"
-#    Properties:
-#      ImageId: "ami-14c5486b"
-#      SubnetId: 
-#        Ref: Subnet
-#      InstanceType: "t2.micro"
+  MyEC2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: "ami-14c5486b"
+      SubnetId: 
+        Ref: Subnet
+      InstanceType: "t2.micro"
+      KeyName: "VB-KeyPair"
+      UserData: 
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo su
+          yum update -y
+          sudo apt install python-pip -y
+          export AIRFLOW_HOME=~/airflow
+          pip install apache-airflow -y
 
-   RedisCache:
-     Type: "AWS::ElastiCache::CacheCluster"
-     Properties:
-       CacheNodeType: "cache.t2.micro"
-       Engine: "redis"
-       NumCacheNodes: 1
-       VpcSecurityGroupIds:
-         - Ref: RedisSecurityGroup
-       CacheSubnetGroupName:
-         Ref: RedisCacheSubnet
+#   RedisCache:
+#     Type: "AWS::ElastiCache::CacheCluster"
+#     Properties:
+#       CacheNodeType: "cache.t2.micro"
+#       Engine: "redis"
+#       NumCacheNodes: 1
+#       VpcSecurityGroupIds:
+#         - Ref: RedisSecurityGroup
+#       CacheSubnetGroupName:
+#         Ref: RedisCacheSubnet
                 
 Outputs:
-#  MyEC2:
-#    Description: The EC2 instance Id
-#    Value: !Ref MyEC2
+  MyEC2:
+    Description: The EC2 instance Id
+    Value: !Ref MyEC2
 #  MyDB:
 #    Description: The Postgres Id
 #    Value: !Ref MyDB
-  RedisCache:
-    Description: The Redis cache Id
-    Value: !Ref RedisCache
+#  RedisCache:
+#    Description: The Redis cache Id
+#    Value: !Ref RedisCache
     
   
 
