@@ -13,6 +13,14 @@ Parameters:
     Type: "AWS::EC2::SecurityGroup::Id"
     Default: "sg-ece2f499"
     Description:  "Select the security group to provision the EC2 in" 
+  RedisSecurityGroup:
+    Type: "List<AWS::EC2::SecurityGroup::Id>"
+    Default: "sg-f6118685"
+    Description:  "Select the security group to provision the EC2 in" 
+  RedisCacheSubnet:
+    Type: "AWS::EC2::Subnet::Id"
+    Default: "subnet-ae3bfdf3"
+    Description:  "Select the Subnet to provision the EC2 in"  
 Resources:
 #  MyBucketForCF:
 #    Type: "AWS::S3::Bucket"
@@ -30,12 +38,35 @@ Resources:
 #      MasterUserPassword: "DBPassword"      
 #    DeletionPolicy: "Snapshot"
     
-  MyEC2:
-    Type: "AWS::EC2::Instance"
-    Properties:
-      ImageId: "ami-14c5486b"
-      SubnetId: 
-        Ref: Subnet
-      InstanceType: "t2.micro"
+#  MyEC2:
+#    Type: "AWS::EC2::Instance"
+#    Properties:
+#      ImageId: "ami-14c5486b"
+#      SubnetId: 
+#        Ref: Subnet
+#      InstanceType: "t2.micro"
+
+   RedisCache:
+     Type: "AWS::ElastiCache::CacheCluster"
+     Properties:
+       CacheNodeType: "cache.t2.micro"
+       Engine: "redis"
+       NumCacheNodes: 1
+       VpcSecurityGroupIds:
+         - Ref: RedisSecurityGroup
+       CacheSubnetGroupName:
+         Ref: RedisCacheSubnet
+                
+Outputs:
+#  MyEC2:
+#    Description: The EC2 instance Id
+#    Value: !Ref MyEC2
+#  MyDB:
+#    Description: The Postgres Id
+#    Value: !Ref MyDB
+  RedisCache:
+    Description: The Redis cache Id
+    Value: !Ref RedisCache
     
+  
 
