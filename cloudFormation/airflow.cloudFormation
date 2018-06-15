@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "This will provision an Airflow environment including S3 bucket, Web server, database, and redis cache"
+Parameters:
+  VPC:
+    Type: "AWS::EC2::VPC::Id"
+    Default: "vpc-4bf87433"
+    Description:  "Select the VPC to provision the resources in"
+Resources:
+  MyBucketForCF:
+    Type: "AWS::S3::Bucket"
+    Properties: 
+      BucketName: "mytestbk1t"
+ 
+  MyDB: 
+    Type: "AWS::RDS::DBInstance"
+    Properties: 
+      DBName: "airflow_db"
+      AllocatedStorage: 20
+      DBInstanceClass: "db.t2.micro"
+      Engine: "postgres"
+      MasterUsername: "DBUser"
+      MasterUserPassword: "DBPassword"      
+    DeletionPolicy: "Snapshot"
+    
+

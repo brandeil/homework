@@ -18,3 +18,4 @@ Known Deviations from Best Practice or Production Setup:
 
 3) A Configuration management tool such as Ansible could be used to provision new instances of EC2 rather than using an AMI.
 
+4) Database should use multi-az failover for production environment
