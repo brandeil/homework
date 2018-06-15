@@ -19,3 +19,5 @@ Known Deviations from Best Practice or Production Setup:
 3) A Configuration management tool such as Ansible could be used to provision new instances of EC2 rather than using an AMI.
 
 4) Database should use multi-az failover for production environment
+
+5) Cloud formation script is hardcoding a number of values because of time constraints.  Ideally, there should be parameters with default values or mappings by environment.
