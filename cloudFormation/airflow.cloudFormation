@@ -5,21 +5,37 @@ Parameters:
     Type: "AWS::EC2::VPC::Id"
     Default: "vpc-4bf87433"
     Description:  "Select the VPC to provision the resources in"
+  Subnet:
+    Type: "AWS::EC2::Subnet::Id"
+    Default: "subnet-ae3bfdf3"
+    Description:  "Select the Subnet to provision the EC2 in"    
+  SecurityGroup:
+    Type: "AWS::EC2::SecurityGroup::Id"
+    Default: "sg-ece2f499"
+    Description:  "Select the security group to provision the EC2 in" 
 Resources:
-  MyBucketForCF:
-    Type: "AWS::S3::Bucket"
-    Properties: 
-      BucketName: "mytestbk1t"
- 
-  MyDB: 
-    Type: "AWS::RDS::DBInstance"
-    Properties: 
-      DBName: "airflow_db"
-      AllocatedStorage: 20
-      DBInstanceClass: "db.t2.micro"
-      Engine: "postgres"
-      MasterUsername: "DBUser"
-      MasterUserPassword: "DBPassword"      
-    DeletionPolicy: "Snapshot"
+#  MyBucketForCF:
+#    Type: "AWS::S3::Bucket"
+#    Properties: 
+#      BucketName: "mytestbk1t"
+# 
+#  MyDB: 
+#    Type: "AWS::RDS::DBInstance"
+#    Properties: 
+#      DBName: "airflow_db"
+#      AllocatedStorage: 20
+#      DBInstanceClass: "db.t2.micro"
+#      Engine: "postgres"
+#      MasterUsername: "DBUser"
+#      MasterUserPassword: "DBPassword"      
+#    DeletionPolicy: "Snapshot"
+    
+  MyEC2:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: "ami-14c5486b"
+      SubnetId: 
+        Ref: Subnet
+      InstanceType: "t2.micro"
     
 
