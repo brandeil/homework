@@ -7,10 +7,11 @@ High-Level Approach
 	b)Update the configuration variables in ~/airflow/airflow.cfg configuration file 
 	c)Start the airflow webserver
 
-
+#
 Assumptions
 1) We will be deploying to an existing VPC on region: eu-west-1 and all core services will already be provisioned such as VPC, Subnets, IAM roles, NACLs, security groups, etc and a pre-existing security group will be available to select.
 
+#
 Known Deviations from Best Practice or Production Setup:
 1) The web server will run on a single EC2 in a single availability zone.  In a real production setup, there would be multiple EC2s running on at least 2 availability zones behind a load balancer and an AutoScaling group.
 
