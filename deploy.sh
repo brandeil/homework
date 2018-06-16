@@ -22,7 +22,9 @@ aws cloudformation wait stack-create-complete --stack-name airflow
 echo 'stack is completed'
 
 # get the newly created EC2 instance ID
-aws cloudformation describe-stacks --query 'Stacks[0].Outputs[?OutputKey==`MyEC2`].OutputValue' --output text
+Ec2InstanceID=$(aws cloudformation describe-stacks --query 'Stacks[0].Outputs[?OutputKey==`MyEC2`].OutputValue' --output text)
+
+echo $Ec2InstanceID
 
 
 # remote into the EC2 and use sed to update ~/airflow/airflow.cfg to values from AWS resources
