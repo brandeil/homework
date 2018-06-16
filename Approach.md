@@ -1,3 +1,4 @@
+#
 High-Level Approach
 1) Create CloudFormation scripts to provision web server on EC2 , PostgreSQL DB on RDS , and Redis cluster on Elasticache.
 ***the EC2 bootstrap script will contain OS updates and installation of pip manager and 'apache-airflow' package
