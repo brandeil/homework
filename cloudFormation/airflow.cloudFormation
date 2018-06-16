@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "This will provision an Airflow environment including S3 bucket, Web server, database, and redis cache"
+Description: "This will provision an Airflow environment including Web server, database, and redis cache"
 Parameters:
   VPC:
     Type: "AWS::EC2::VPC::Id"
@@ -22,11 +22,6 @@ Parameters:
     Default: "subnet-ae3bfdf3"
     Description:  "Select the Subnet to provision the EC2 in"  
 Resources:
-#  MyBucketForCF:
-#    Type: "AWS::S3::Bucket"
-#    Properties: 
-#      BucketName: "mytestbk1t"
-# 
 #  MyDB: 
 #    Type: "AWS::RDS::DBInstance"
 #    Properties: 
