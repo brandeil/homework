@@ -5,8 +5,21 @@ echo "copy cloud formation template to s3"
 aws s3 cp ./cloudformation/airflow.cloudFormation s3://lb-mybucket-aws
 
 # create the cloud formation stack
-#echo "create the cloud formation stack"
-#aws cloudformation create-stack --stack-name "airflow" --template-url "https://s3.amazonaws.com/lb-mybucket-aws/airflow.cloudFormation"
+checkstatus=$(aws cloudformation describe-stacks --stack-name airflow --query 'Stacks[0].StackStatus')
+echo $checkstatus
+#if [ $checkstatus == "CREATE_COMPLETE" ]; then
+# echo 'stack exists; updating....'
+# aws cloudformation update-stack --stack-name "airflow" --template-url "https://s3.amazonaws.com/lb-mybucket-aws/airflow.cloudFormation"
+#else
+# echo 'stack does not exist; creating...'
+# aws cloudformation create-stack --stack-name "airflow" --template-url "https://s3.amazonaws.com/lb-mybucket-aws/airflow.cloudFormation"
+#fi
+echo 'stack exists; updating....'
+aws cloudformation update-stack --stack-name "airflow" --template-url "https://s3.amazonaws.com/lb-mybucket-aws/airflow.cloudFormation"
+
+echo 'waiting for stack to complete...'
+aws cloudformation wait stack-update-complete --stack-name airflow
+echo 'stack is updated'
 
 # get the newly created EC2 instance ID
 aws cloudformation describe-stacks --query 'Stacks[0].Outputs[?OutputKey==`MyEC2`].OutputValue' --output text
