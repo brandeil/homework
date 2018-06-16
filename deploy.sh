@@ -28,6 +28,8 @@ echo $Ec2InstanceID
 
 
 # remote into the EC2 and use sed to update ~/airflow/airflow.cfg to values from AWS resources
+#ssh -i "homework.pem" ubuntu@ec2-54-235-24-235.compute-1.amazonaws.com
+
 #sql_alchemy_conn=
 #base_url=
 #web_server_host

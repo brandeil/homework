@@ -40,7 +40,7 @@ Resources:
       SubnetId: 
         Ref: Subnet
       InstanceType: "t2.micro"
-      KeyName: "VB-KeyPair"
+      KeyName: "homework"
       SecurityGroupIds: 
         Ref: EC2SecurityGroup
       UserData: 
@@ -53,7 +53,6 @@ Resources:
           pip install apache-airflow
           #airflow initdb
           #airflow webserver -p 8080
-          chmod 400 VB-KeyPair.pem
 
 #   RedisCache:
 #     Type: "AWS::ElastiCache::CacheCluster"
