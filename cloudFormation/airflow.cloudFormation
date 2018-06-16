@@ -47,11 +47,12 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
           #sudo su
-          apt-get update -y && apt-upgrade -y
+          apt-get update -y && apt upgrade -y
           apt install python-pip -y
           export AIRFLOW_HOME=/home/ubuntu/airflow
           pip install apache-airflow
-          airflow
+          airflow initdb
+          airflow webserver -p 8080
 
 #   RedisCache:
 #     Type: "AWS::ElastiCache::CacheCluster"
