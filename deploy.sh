@@ -14,12 +14,12 @@ echo $checkstatus
 # echo 'stack does not exist; creating...'
 # aws cloudformation create-stack --stack-name "airflow" --template-url "https://s3.amazonaws.com/lb-mybucket-aws/airflow.cloudFormation"
 #fi
-echo 'stack exists; updating....'
-aws cloudformation update-stack --stack-name "airflow" --template-url "https://s3.amazonaws.com/lb-mybucket-aws/airflow.cloudFormation"
+
+aws cloudformation create-stack --stack-name "airflow" --template-url "https://s3.amazonaws.com/lb-mybucket-aws/airflow.cloudFormation"
 
 echo 'waiting for stack to complete...'
-aws cloudformation wait stack-update-complete --stack-name airflow
-echo 'stack is updated'
+aws cloudformation wait stack-create-complete --stack-name airflow
+echo 'stack is completed'
 
 # get the newly created EC2 instance ID
 aws cloudformation describe-stacks --query 'Stacks[0].Outputs[?OutputKey==`MyEC2`].OutputValue' --output text
