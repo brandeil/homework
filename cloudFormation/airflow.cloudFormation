@@ -41,7 +41,7 @@ Resources:
   MyEC2:
     Type: "AWS::EC2::Instance"
     Properties:
-      ImageId: "ami-14c5486b"
+      ImageId: "ami-a4dc46db"  #ubuntu
       SubnetId: 
         Ref: Subnet
       InstanceType: "t2.micro"
@@ -50,10 +50,10 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash
           sudo su
-          yum update -y
-          sudo apt install python-pip -y
+          apt-get update -y
+          apt install python-pip -y
           export AIRFLOW_HOME=~/airflow
-          pip install apache-airflow -y
+          pip install apache-airflow
 
 #   RedisCache:
 #     Type: "AWS::ElastiCache::CacheCluster"
