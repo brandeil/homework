@@ -30,17 +30,21 @@ echo $PublicIp
 
 connectUser="ubuntu@"
 
-# remote into the EC2 
-ssh -i "homework.pem" $connectUser$PublicIp
+echo $connectUser$PublicIp
 
+# remote into the EC2 
 # use sed to update ./airflow/airflow.cfg to values from AWS resources
+echo "ssh into EC2"
+ssh -i "homework.pem" -o StrictHostKeyChecking=no $connectUser$PublicIp "sed -i 's/sql_alchemy_conn = .*/sql_alchemy_conn = changed/' /home/ubuntu/airflow/airflow.cfg"
+echo "successful ssh"
+
+
 #sql_alchemy_conn=
 #base_url=
 #web_server_host
 #web_server_port
 #broker_url
 #celery_result_backend
-a
 
 
 # initialize the database
