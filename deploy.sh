@@ -22,21 +22,25 @@ aws cloudformation wait stack-create-complete --stack-name airflow
 echo 'stack is completed'
 
 # get the newly created EC2 instance ID
-Ec2InstanceID=$(aws cloudformation describe-stacks --query 'Stacks[0].Outputs[?OutputKey==`MyEC2`].OutputValue' --output text)
-
+Ec2InstanceID=$(aws cloudformation describe-stacks --stack-name airflow --query 'Stacks[0].Outputs[?OutputKey==`MyEC2`].OutputValue' --output text)
 echo $Ec2InstanceID
 
+PublicIp=$(aws ec2 describe-instances --instance-ids $Ec2InstanceID --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+echo $PublicIp
 
-# remote into the EC2 and use sed to update ~/airflow/airflow.cfg to values from AWS resources
-#ssh -i "homework.pem" ubuntu@ec2-54-235-24-235.compute-1.amazonaws.com
+connectUser="ubuntu@"
 
+# remote into the EC2 
+ssh -i "homework.pem" $connectUser$PublicIp
+
+# use sed to update ./airflow/airflow.cfg to values from AWS resources
 #sql_alchemy_conn=
 #base_url=
 #web_server_host
 #web_server_port
 #broker_url
 #celery_result_backend
-
+a
 
 
 # initialize the database
