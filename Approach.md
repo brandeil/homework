@@ -17,9 +17,7 @@ Known Deviations from Best Practice or Production Setup:
 
 2) It might be a good idea to use an AMI that has python, pip manager, etc pre-installed instead of using a base Linux images provided by AWS
 
-3) A Configuration management tool such as Ansible/Puppet would be a much better approach instead of embedding start up scripts on the EC2.  For example,  the web software could be deployed to any distribution of Linux whereas the User data scripts (as coded) will only work on Ubuntu.
-For the sake of time,  using User Data is faster as opposed to creating the tasks of configuring a Puppet master and building out the modules required.
-That is the only reason for using User Data scripts.
+3) A Configuration management tool such as Ansible/Puppet would be another approach to deploying out the airflow software to the EC2 instances.
 
 4) Database should use multi-az failover for production environment to ensure high-availability.
 
