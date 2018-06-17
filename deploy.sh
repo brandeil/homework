@@ -4,9 +4,12 @@
 echo "copy cloud formation template to s3"
 aws s3 cp ./cloudformation/airflow.cloudFormation s3://lb-mybucket-aws
 
+
+#aws cloudformation delete-stack --stack-name "airflow" 
+
 # create the cloud formation stack
-checkstatus=$(aws cloudformation describe-stacks --stack-name airflow --query 'Stacks[0].StackStatus')
-echo $checkstatus
+#checkstatus=$(aws cloudformation describe-stacks --stack-name airflow --query 'Stacks[0].StackStatus')
+#echo $checkstatus
 #if [ $checkstatus == "CREATE_COMPLETE" ]; then
 # echo 'stack exists; updating....'
 # aws cloudformation update-stack --stack-name "airflow" --template-url "https://s3.amazonaws.com/lb-mybucket-aws/airflow.cloudFormation"
