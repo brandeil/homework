@@ -41,7 +41,7 @@ dbconnstring="sqlite:////home/ubuntu/airflow/airflow.db"
 echo -e '#!/bin/bash' >> airflow_install.sh
 echo 'export AIRFLOW_HOME=/home/ubuntu/airflow' >> airflow_install.sh
 echo 'export AIRFLOW__CORE__SQL_ALCHEMY_CONN="sqlite:////home/ubuntu/airflow/airflow.db"' >> airflow_install.sh
-echo 'pip install apache-airflow[postgres]' >> airflow_install.sh
+echo 'sudo pip install apache-airflow[postgres]' >> airflow_install.sh
 echo '# initialize the database' >> airflow_install.sh
 echo 'airflow initdb' >> airflow_install.sh
 echo '# start the web server, default port is 8080' >> airflow_install.sh
@@ -60,4 +60,7 @@ scp -i "homework.pem" airflow_install.sh $connectUser$PublicIp:/home/ubuntu/.
 
 # ssh into the EC2 ; run additional script
 echo "ssh into EC2 and run airflow installation script"
-#ssh -i "homework.pem" -o StrictHostKeyChecking=no $connectUser$PublicIp "./airflow_install.sh"
+#ssh -i "homework.pem" -o StrictHostKeyChecking=no ubuntu@34.227.83.246
+ssh -i "homework.pem" -o StrictHostKeyChecking=no $connectUser$PublicIp "./airflow_install.sh"
+
+rm airflow_install.sh
