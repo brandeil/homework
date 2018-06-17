@@ -32,15 +32,17 @@ PublicIp=$(aws ec2 describe-instances --instance-ids $Ec2InstanceID --query 'Res
 echo $PublicIp
 
 connectUser="ubuntu@"
-
 echo $connectUser$PublicIp
 
+postgresDB="postgres"
+
+#sudo sed -i 's/sql_alchemy_conn = .*/sql_alchemy_conn = changed/' /home/ubuntu/airflow/airflow.cfg
 # remote into the EC2 
 # use sed to update ./airflow/airflow.cfg to values from AWS resources
-#echo "ssh into EC2"
-#ssh -i "homework.pem" -o StrictHostKeyChecking=no $connectUser$PublicIp "sudo sed -i 's/sql_alchemy_conn = .*/sql_alchemy_conn = changed/' /home/ubuntu/airflow/airflow.cfg"
-#echo "successful ssh"
-
+echo "ssh into EC2 and run update config script"
+#ssh -i "homework.pem" -o StrictHostKeyChecking=no ubuntu@35.173.203.6 'bash -s' < install_airflow.sh
+ssh -i "homework.pem" -o StrictHostKeyChecking=no $connectUser$PublicIp 'bash -s' < install_airflow.sh
+echo "successful update of config script"
 
 #sql_alchemy_conn=
 #base_url=
