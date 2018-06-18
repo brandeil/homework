@@ -22,16 +22,16 @@ Parameters:
     Default: "subnet-ae3bfdf3"
     Description:  "Select the Subnet to provision the EC2 in"  
 Resources:
-  #MyDB: 
-  #  Type: "AWS::RDS::DBInstance"
-  #  Properties: 
-  #    DBName: "airflow_db"
-  #    AllocatedStorage: 20
-  #    DBInstanceClass: "db.t2.micro"
-  #    Engine: "postgres"
-  #    MasterUsername: "DBUser"
-  #    MasterUserPassword: "DBPassword"      
-  #  DeletionPolicy: "Snapshot"
+  MyDB: 
+    Type: "AWS::RDS::DBInstance"
+    Properties: 
+      DBName: "airflow_db"
+      AllocatedStorage: 20
+      DBInstanceClass: "db.t2.micro"
+      Engine: "postgres"
+      MasterUsername: "DBUser"
+      MasterUserPassword: "DBPassword"      
+    DeletionPolicy: "Snapshot"
     
   MyEC2:
     Type: "AWS::EC2::Instance"
@@ -63,9 +63,9 @@ Outputs:
   MyEC2:
     Description: The EC2 instance Id
     Value: !Ref MyEC2
-  #MyDB:
-  #  Description: The Postgres Id
-  #  Value: !Ref MyDB
+  MyDB:
+    Description: The Postgres Id
+    Value: !Ref MyDB
   #RedisCache:
   #  Description: The Redis cache Id
   #  Value: !Ref RedisCache

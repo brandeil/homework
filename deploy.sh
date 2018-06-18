@@ -33,11 +33,11 @@ connectUser="ubuntu@"
 echo $connectUser$PublicIp
   
 #get the connection string from the RDS postgresDB instance
-#sql_alchemy_conn = postgresql+psycopg2://<rest of url>
-#echo AIRFLOW__CORE__SQL_ALCHEMY_CONN="postgresql+psycopg2://${var.db_username}@${module.db.this_db_instance_address}/${module.db.this_db_instance_name}" >> /etc/environment
-dbconnstring="sqlite:////home/ubuntu/airflow/airflow.db"
+#dbconnstring="sqlite:////home/ubuntu/airflow/airflow.db"
+rdsEndpoint=$(aws rds describe-db-instances --query 'DBInstances[0].Endpoint.Address' --output text)
+#dbconnstring="postgresql+psycopg2://DBUser:DBPassword@amv6p6hkejfjqo.ciftrkiylmye.us-east-1.rds.amazonaws.com:5432/airflow_db"
+dbconnstring="postgresql+psycopg2://DBUser:DBPassword@$rdsEndpoint:5432/airflow_db"
 
-#54.87.159.174
 # build up the installation script
 echo -e '#!/bin/bash' >> airflow_install.sh
 echo 'export AIRFLOW_HOME=/home/ubuntu/airflow' >> airflow_install.sh
@@ -59,7 +59,7 @@ echo 'airflow webserver -p 8080' >> airflow_install.sh
 # ssh into the ec2 and copy the airflow_install script
 echo "ssh and copy script"
 scp -i "homework.pem" -o StrictHostKeyChecking=no airflow_install.sh $connectUser$PublicIp:/home/ubuntu/.
-
+#ssh -i "homework.pem" -o StrictHostKeyChecking=no ubuntu@54.164.182.138
 # ssh into the EC2 ; run additional script
 echo "ssh into EC2 and run airflow installation script"
 ssh -i "homework.pem" -o StrictHostKeyChecking=no $connectUser$PublicIp "./airflow_install.sh"
