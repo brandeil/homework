@@ -36,14 +36,20 @@ echo $connectUser$PublicIp
 #dbconnstring="sqlite:////home/ubuntu/airflow/airflow.db"
 rdsEndpoint=$(aws rds describe-db-instances --query 'DBInstances[0].Endpoint.Address' --output text)
 dbconnstring="postgresql+psycopg2://DBUser:DBPassword@$rdsEndpoint:5432/airflow_db"
+celerydb="db+postgresql://DBUser:DBPassword@$rdsEndpoint:5432/airflow_db"
+broker_url = "redis://redis:6379/1"
 
 # build up the installation script
 echo -e '#!/bin/bash' >> airflow_install.sh
 echo 'export AIRFLOW_HOME=/home/ubuntu/airflow' >> airflow_install.sh
 echo 'export AIRFLOW__CORE__SQL_ALCHEMY_CONN='$dbconnstring >> airflow_install.sh
+echo 'export AIRFLOW__CORE__CELERY_RESULT_BACKEND='$celerydb >> airflow_install.sh
+echo 'export AIRFLOW__CORE__BROKER_URL='$broker_url >> airflow_install.sh
 echo 'sudo -H pip install apache-airflow[postgres, redis]' >> airflow_install.sh
 echo '# initialize the database' >> airflow_install.sh
 echo 'airflow initdb' >> airflow_install.sh
+echo '# start worker for redis' >> airflow_install.sh
+echo 'airflow worker' >> airflow_install.sh
 echo '# start the web server, default port is 8080' >> airflow_install.sh
 echo 'airflow webserver -p 8080' >> airflow_install.sh
 
