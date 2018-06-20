@@ -45,7 +45,7 @@ RUN airflow initdb
 
 RUN airflow worker
 
-RUN airflow webserer -p 8080
+RUN airflow webserver -p 8080
 
 
 3) Build and Push image to Dockerhub (or other repo)
