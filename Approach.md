@@ -28,15 +28,25 @@ Ideal strategy
 1) Provision cloud resources using AWS CloudFormation or Terraform
 
 2) Create Docker image to host the airflow application.  The Dockerfile would be similar to:
+
 FROM python:3
+
 ENV AIRFLOW_HOME=<arg>
+
 ENV AIRFLOW__CORE__SQL_ALCHEMY_CONN=<arg>
+
 ENV AIRFLOW__CORE__CELERY_RESULT_BACKEND=<arg>
+
 ENV AIRFLOW__CORE__BROKER_URL=<arg>
+
 RUN pip install apache-airflow[postgres, redis]
+
 RUN airflow initdb
+
 RUN airflow worker
+
 RUN airflow webserer -p 8080
+
 
 3) Build and Push image to Dockerhub (or other repo)
 docker build -t myuserid/airflow .
